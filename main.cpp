@@ -14,8 +14,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main()
-{
+#include <stdlib.h>
+#include <test.hpp>
 
+int main()
+{
+	srand(42);
+	vector_unit();
 	// system("leaks container-test | grep -o 'leaks for 0'");
+	return(0);
 }

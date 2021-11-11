@@ -152,8 +152,6 @@ static void capacity_test()
 	std_vec.resize(5000, 420);
 	compare(ft_vec, std_vec, compare_these_vectors_yo, "rezize(5000, 420)");
 
-	/* je boi gaat hier ergens dood ofzo */
-
 	ft_vec.resize(21, 1337);
 	std_vec.resize(21, 1337);
 	compare(ft_vec, std_vec, compare_these_vectors_yo, "rezize(5000, 420)");
@@ -316,7 +314,6 @@ template< class Container >
 static size_t benchmark_test(Container& con, Container& vec)
 {
 	Timer	time;
-	size_t	duration;
 
 	time.start_timer();
 	for (size_t i = 0; i < 500000; ++i)
@@ -350,9 +347,10 @@ static size_t benchmark_test(Container& con, Container& vec)
 	time.end_and_print("clear");
 
 	time.start_timer();
-	for (size_t i = 0; i < 50000; ++i) {
+	for (size_t i = 0; i < 500; ++i) {
 		vec.reserve(250);
 		vec.reserve(500000);
+		vec.clear();
 	}
 	time.end_and_print("Reserve");
 
@@ -362,7 +360,7 @@ static size_t benchmark_test(Container& con, Container& vec)
 	time.start_timer();
 	for (size_t i = 0; i < 500; ++i) {
 		vec.resize(25000);
-		vec.resize(13370);
+		vec.resize(1337);
 	}
 	time.end_and_print("Resize");
 	
@@ -403,12 +401,4 @@ void	vector_unit()
 	start_test("element access", element_access_test); 
 	start_test("modifier test", modifier_test);
 	benchmark();
-}
-
-
-int main()
-{
-	srand(42);
-	vector_unit();
-	return(0);
 }
