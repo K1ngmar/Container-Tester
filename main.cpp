@@ -24,6 +24,7 @@ int main()
 	srand(42);
 	vector_unit();
 	vector_benchmark();
-	// system("leaks container-test | grep -o 'leaks for 0'");
+
+	system("leaks container_test | grep 'leaks for'");
 	return(0);
 }
