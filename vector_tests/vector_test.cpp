@@ -18,27 +18,28 @@
 #include <vector.hpp>
 #include <vector>
 
-# define TEST(container, tp, name)\
-	ft::container<tp> ft_##name;\
-	std::container<tp> std_##name;
+# define CREATE(container, _type, name)\
+	ft::container<_type> ft_##name;\
+	std::container<_type> std_##name;
+
+# define COMPARE(name)\
+	if (compare_these_vectors_yo(ft_##name, std_##name) == true)\
+		std::cout << "[" << COLOR_GREEN << "OK" << COLOR_RESET << "]";\
+	else{\
+		std::cout << "[" << COLOR_RED << "KO" << COLOR_RESET << "]";\
+		std::cout << "test_case: " << #name << std::endl;\
+	}
 
 template <class ft_vec, class std_vec>
-void	compare_these_vectors_yo(ft_vec& ft, std_vec& std)
+bool	compare_these_vectors_yo(ft_vec& ft, std_vec& std)
 {
-	bool success = true;
-
 	if (ft.size() != std.size())
-		success = false;
+		return false;
 	for(size_t i = 0; i < ft.size(); ++i) {
-		if (ft[i] != std[i]) {
-			success = false;
-			break ;
-		}
+		if (ft[i] != std[i])
+			return false;
 	}
-	if (success == true)
-		std::cout << "[" << COLOR_GREEN << "OK" << COLOR_RESET << "]";
-	else
-		std::cout << "[" << COLOR_RED << "KO" << COLOR_RESET << "]";
+	return (true);
 }
 
 /////////////////
@@ -46,20 +47,23 @@ void	compare_these_vectors_yo(ft_vec& ft, std_vec& std)
 /////////////////
 static void constructor_test()
 {
+	size_t ft_time	= 0;
+	size_t std_time	= 0;
 
 /* default constructor */
 
-	TEST(vector, int, default_constructor)
+	CREATE(vector, int, default_constructor)
+	COMPARE(default_constructor);
 
-	std::cout << ft_default_constructor.size() << std::endl;
 
 // /* set allocator */
 // 	ft::vector<std::string, std::allocator<std::string> > set_allocator;
 // 	std::vector<std::string, std::allocator<std::string> > sset_allocator;
 
 // /* fill constructor */
-// 	ft::vector<int> fill_constructor(42, 'a');
-// 	std::vector<int> sfill_constructor(42, 'a');
+	ft::vector<int> ft_fill_constructor(42, 'a');
+	std::vector<int> std_fill_constructor(42, 'a');
+	COMPARE(fill_constructor)
 
 // /* range constructor */
 // 	ft::vector<int> range_constructor(fill_constructor.begin(), fill_constructor.end() - 21);
