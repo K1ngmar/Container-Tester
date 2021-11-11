@@ -14,11 +14,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <iostream>
-# include <iomanip>
-# include <string>
-# include <sys/time.h>
-# include <stdlib.h>
 # include <test.hpp>
 
 void	print_header(std::string header)
@@ -28,85 +23,11 @@ void	print_header(std::string header)
 	std::cout << "-----------------\n" << std::endl;
 }
 
-template< class ft_container, class std_container, class T >
-void	insert_amount(ft_container& ft_con, std_container& std_con, T val, size_t n)
-{
-	for (size_t i = 0; i < n; ++i) {
-		ft_con.insert(val);
-		std_con.insert(val);
-	}
-}
-
-template< class ft_container, class std_container >
-void	push_back_increment(ft_container& ft_con, std_container& std_con, size_t n)
-{
-	for (size_t i = 0; i < n; ++i) {
-		ft_con.push_back(i);
-		std_con.push_back(i);
-	}
-}
-
-template< class ft_container, class std_container >
-void	insert_increment(ft_container& ft_con, std_container& std_con, size_t n)
-{
-	for (size_t i = 0; i < n; ++i) {
-		ft_con.insert(i);
-		std_con.insert(i);
-	}
-}
-
-template< class ft_container, class std_container, class T >
-void	push_back_amount(ft_container& ft_con, std_container& std_con, T val, size_t n)
-{
-	for (size_t i = 0; i < n; ++i) {
-		ft_con.push_back(val);
-		std_con.push_back(val);
-	}
-}
-
 void	start_test(std::string name, void(*func)())
 {
 	std::cout << COLOR_YELLOW << std::right << std::setw(15) << name << COLOR_RESET << ": ";
 	func();
 	std::cout << "\n";
-}
-
-template < class ft_val, class std_val >
-void	compare(ft_val& ft_con, std_val& std_con, bool(*comp)(ft_val&, std_val&), const char* test)
-{
-	if (comp(ft_con, std_con) == true)
-		std::cout << TEST_SUCCESS;
-	else {
-		std::cout << TEST_FAILURE;
-		std::cout << "test: " << test << std::endl;
-	}
-}
-
-template < class T1, class T2 >
-void	print_difference(T1 expected, T2 received)
-{
-	std::cout	<< "expected value: " << expected << std::endl\
-				<< "received value: " << received << std::endl;
-}
-
-template <class ft_vec, class std_vec>
-bool	compare_these_iterators_yo(ft_vec& ft, std_vec& std)
-{
-	if (*ft != *std) {
-		print_difference(*std, *ft);
-		return false;
-	}
-	return (true);
-}
-
-template <class ft_vec, class std_vec>
-bool	compare_these_values_yo(ft_vec& ft, std_vec& std)
-{
-	if (ft != std) {
-		print_difference(std, ft);
-		return false;
-	}
-	return (true);
 }
 
 bool compare_exceptions(std::string& ft_exc, std::string& std_exc)
@@ -159,8 +80,8 @@ void	Timer::print_time(size_t& time, const char * msg)
 {
 	std::cout	<< COLOR_PINK	<< std::setw(12) << std::right << msg\
 				<< COLOR_RESET  << " took: " \
-				<< COLOR_BLUE	<< std::setw(10) << std::right << time \
-				<< COLOR_RED	<< "µs" \
+				<< COLOR_LBLUE	<< std::setw(10) << std::right << time \
+				<< COLOR_BLU	<< "µs" \
 				<< COLOR_RESET	<< std::endl;
 }
 
@@ -171,4 +92,35 @@ void	Timer::print_time(size_t& time, const char * msg)
 test::test(int val, std::string name) 
 	: _val(val), _name(name) 
 {
+}
+
+///////////////////////
+// Benchmark headers //
+///////////////////////
+
+void	print_benchmark_header(const char* prefix, const char* type)
+{
+	std::cout << "\n-----";
+	std::cout << COLOR_BLU << "BENCHMARK ";
+	std::cout << COLOR_GREEN << prefix;
+	std::cout << COLOR_RESET << "::" << COLOR_ORANGE << type << COLOR_RESET;
+	std::cout << "-----\n";
+}
+
+void	print_benchmark_result(double&	ft_dur, double& std_dur, const char* type)
+{
+	double result = (std_dur / ft_dur) * 100;
+
+	std::cout << COLOR_GREEN << "\nft" << COLOR_RESET;
+	std::cout << "::" << COLOR_ORANGE << type << COLOR_RESET;
+	std::cout << std::fixed << std::setprecision(2);
+	std::cout << " was ";
+	if (result >= (float)100) {
+		std::cout << COLOR_GREEN << result - (float)100 << COLOR_RESET << "% ";
+		std::cout << "faster :D\n";
+	}
+	else {
+		std::cout << COLOR_RED << (float)100 - result << COLOR_RESET << "% ";
+		std::cout << "slower :(\n";
+	}
 }

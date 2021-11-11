@@ -23,8 +23,9 @@ FLAGS		=	-std=c++98 -pedantic -Wall -Werror -Wextra
 DEBUG_FLAGS	=	-g -fsanitize=address
 
 SRC			=	main.cpp \
-				utility/utility.cpp \
-				vector_tests/vector_unit.cpp
+				utility/test_utility.cpp \
+				vector_tests/vector_unit.cpp \
+				vector_tests/vector_benchmark.cpp
 
 HEADER_LOC	=	-I ../Containers/deque/				\
 				-I ../Containers/utility/			\

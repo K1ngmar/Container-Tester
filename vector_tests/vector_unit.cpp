@@ -310,87 +310,6 @@ static void modifier_test()
 	compare(ft_vec, std_vec, compare_these_vectors_yo, "swap()");
 }
 
-template< class Container >
-static size_t benchmark_test(Container& con, Container& vec)
-{
-	Timer	time;
-
-	time.start_timer();
-	for (size_t i = 0; i < 500000; ++i)
-		con.push_back(test(i));
-	time.end_and_print("push_back");
-
-	time.start_timer();
-	con.insert(con.begin(), 250000, test(1, "insert"));
-	time.end_and_print("fill insert");
-
-	time.start_timer();
-	while (con.size() > 1337)
-		con.pop_back();
-	time.end_and_print("pop back");
-	
-	time.start_timer();
-	for (size_t i = 0; i < 42069; ++i)
-		vec.swap(con);
-	time.end_and_print("swap");
-
-	vec.insert(vec.begin(), 42069, test(1, "erase"));
-
-	time.start_timer();
-	vec.erase(vec.begin(), vec.end() - 2500);
-	time.end_and_print("erase range");
-
-	vec.insert(vec.begin(), 42069, test(1, "erase"));
-
-	time.start_timer();
-	vec.clear();
-	time.end_and_print("clear");
-
-	time.start_timer();
-	for (size_t i = 0; i < 500; ++i) {
-		vec.reserve(250);
-		vec.reserve(500000);
-		vec.clear();
-	}
-	time.end_and_print("Reserve");
-
-	for (size_t i = 0; i < vec.capacity(); i++)
-		vec.push_back(test(i));
-
-	time.start_timer();
-	for (size_t i = 0; i < 500; ++i) {
-		vec.resize(25000);
-		vec.resize(1337);
-	}
-	time.end_and_print("Resize");
-	
-	time.start_timer();
-	for (size_t i = 0; i < 50; ++i) {
-		vec.assign(420, test(69));
-		vec.assign(200000, test(69));
-	}
-	time.end_and_print("assign");
-	return (time.get_total_time());
-}
-
-static void benchmark()
-{
-	double ft_duration, std_duration;
-	std::cout << "\n   -----BENCHMARK ft::vector-----\n";
-	ft::vector<test> ft_con;
-	ft::vector<test> ft_vec;
-	ft_duration = benchmark_test(ft_con, ft_vec);
-
-	std::cout << "\n  -----BENCHMARK std::vector-----\n";
-	std::vector<test> std_con;
-	std::vector<test> std_vec;
-	std_duration = benchmark_test(std_con, std_vec);
-
-	std::cout << "ft::vector was " << ((std_duration / ft_duration) * 100) << "% faster\n";
-
-	// std::vector<test> std_vec;
-}
-
 void	vector_unit()
 {
 	print_header("Vector member functions");
@@ -400,5 +319,4 @@ void	vector_unit()
 	start_test("capacity", capacity_test); 
 	start_test("element access", element_access_test); 
 	start_test("modifier test", modifier_test);
-	benchmark();
 }
