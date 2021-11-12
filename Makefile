@@ -65,4 +65,4 @@ run: re
 test: run
 
 debug: fclean
-	$(CC) $(FLAGS) $(DEBUG_FLAGS) $(SRC) -D DEBUG -o $(NAME)
+	$(CC) $(FLAGS) $(HEADER_LOC) $(TEST_HEADER) $(DEBUG_FLAGS) $(SRC) -D DEBUG -o $(NAME)

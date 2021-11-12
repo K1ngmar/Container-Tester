@@ -17,85 +17,119 @@
 # include <test.hpp>
 # include <vector.hpp>
 # include <vector>
+# include <Benchmark.hpp>
 
-template< class Container >
-	static size_t benchmark_test(Container& con, Container& vec, std::vector< std::pair< std::string, size_t > >& result)
+template < class Container >
+	static void	fill_container(Container& con)
 {
-	Timer	time;
+	con.insert(con.begin(), 25000, test(420, "data"));
+}
 
-	time.start_timer();
+template < class Container >
+	static	void bench_push_back(Container& con)
+{
 	for (size_t i = 0; i < 500000; ++i)
 		con.push_back(test(i));
-	result.push_back(std::make_pair("push_back", time.end_reset()));
+}
 
-	time.start_timer();
-	con.insert(con.begin(), 250000, test(1, "insert"));
-	result.push_back(std::make_pair("fill insert", time.end_reset()));
+template < class Container >
+	static void	bench_fill_insert(Container& con)
+{
+	for (size_t i = 0; i < 50; ++i)
+		con.insert(con.begin(), 250, test(1, "insert"));
+}
 
-	time.start_timer();
+template < class Container >
+	static void bench_pop_back(Container& con)
+{
 	while (con.size() > 1337)
 		con.pop_back();
-	result.push_back(std::make_pair("pop_back", time.end_reset()));
-	
-	time.start_timer();
+}
+
+template < class Container >
+	static void bench_swap(Container& con, Container& vec)
+{
 	for (size_t i = 0; i < 42069; ++i)
 		vec.swap(con);
-	result.push_back(std::make_pair("swap", time.end_reset()));
+}
 
-	vec.insert(vec.begin(), 42069, test(1, "erase"));
+template < class Container >
+	static void bench_erase(Container& con)
+{
+	con.erase(con.begin(), con.end() - 2500);
+}
 
-	time.start_timer();
-	vec.erase(vec.begin(), vec.end() - 2500);
-	result.push_back(std::make_pair("erase", time.end_reset()));
+template < class Container >
+	static void bench_clear(Container& con)
+{
+	con.clear();
+}
 
-	vec.insert(vec.begin(), 42069, test(1, "erase range"));
-
-	time.start_timer();
-	vec.clear();
-	result.push_back(std::make_pair("clear", time.end_reset()));
-
-	time.start_timer();
+template < class Container >
+	static void bench_reserve(Container& con)
+{
 	for (size_t i = 0; i < 500; ++i) {
-		vec.reserve(250);
-		vec.reserve(500000);
-		vec.clear();
+		con.reserve(250);
+		con.reserve(500000);
+		con.clear();
 	}
-	result.push_back(std::make_pair("reserve", time.end_reset()));
+}
 
-	for (size_t i = 0; i < vec.capacity(); i++)
-		vec.push_back(test(i));
-
-	time.start_timer();
+template < class Container >
+	static void bench_resize(Container& con)
+{
 	for (size_t i = 0; i < 500; ++i) {
-		vec.resize(25000);
-		vec.resize(1337);
+		con.resize(25000);
+		con.resize(1337);
 	}
-	result.push_back(std::make_pair("resize", time.end_reset()));
-	
-	time.start_timer();
+}
+
+template < class Container >
+	static void bench_assign(Container& con)
+{
 	for (size_t i = 0; i < 50; ++i) {
-		vec.assign(420, test(69));
-		vec.assign(200000, test(69));
+		con.assign(420, test(69));
+		con.assign(200000, test(69));
 	}
-	result.push_back(std::make_pair("assign", time.end_reset()));
+}
 
-	return (time.get_total_time());
+template < class Bench >
+	static void bench_tests(Bench& bench)
+{
+	bench.run_test(bench_push_back, "push back");
+	bench.run_test(bench_fill_insert, "fill insert");
+	bench.run_test(bench_pop_back, "pop back");
+
+	fill_container(bench.get_container());
+	bench.run_test(bench_swap, "swap");
+
+	for (size_t i = 0; i < 250; ++i) {
+		fill_container(bench.get_container());
+		bench.run_test(bench_erase, "erease");
+	}
+
+	for (size_t i = 0; i < 250; ++i) {
+		fill_container(bench.get_container());
+		bench.run_test(bench_clear, "clear");
+	}
+
+	bench.run_test(bench_reserve, "reserve");
+	fill_container(bench.get_container());
+	bench.run_test(bench_resize, "resize");
+	bench.run_test(bench_assign, "assign");
 }
 
 void vector_benchmark()
 {
-	double ft_duration, std_duration;
-	std::vector< std::pair< std::string, size_t> > ft_result, std_result;
-	
-	ft::vector<test> ft_con;
-	ft::vector<test> ft_vec;
-	ft_duration = benchmark_test(ft_con, ft_vec, ft_result);
+	Benchmark< ft::vector<test> >	ft_bench;
+	Benchmark< std::vector<test> >	std_bench;
 
-	std::vector<test> std_con;
-	std::vector<test> std_vec;
-	std_duration = benchmark_test(std_con, std_vec, std_result);
+	bench_tests(ft_bench);
+	bench_tests(std_bench);
+
+	std::map< std::string, size_t >	ft_result = ft_bench.get_result();
+	std::map< std::string, size_t >	std_result = std_bench.get_result();
 
 	format_benchmark_result(ft_result, std_result, "vector");
-
-	print_benchmark_result(ft_duration, std_duration, "vector");
+	print_benchmark_result(ft_bench.get_total_time(), std_bench.get_total_time(), "vector");
 }
