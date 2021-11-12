@@ -259,14 +259,14 @@ static void modifier_test()
 
 /*
 ** does the big segfault
-/*
+*/
 
-// /* pop front */
-// 	for (size_t i = 0; i < 6969; i++) {
-// 		ft_empty.pop_front();
-// 		std_empty.pop_front();
-// 	}
-// 	compare(ft_empty, std_empty, compare_these_deqtors_yo, "pop_front() * 6969");
+/* pop front */
+	for (size_t i = 0; i < 6969; i++) {
+		ft_empty.pop_front();
+		std_empty.pop_front();
+	}
+	compare(ft_empty, std_empty, compare_these_deqtors_yo, "pop_front() * 6969");
 
 
 /* clear test */
