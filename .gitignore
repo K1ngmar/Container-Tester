@@ -33,3 +33,5 @@
 
 # other
 .vscode/
+*.dSYM
+container_test
