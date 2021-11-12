@@ -19,40 +19,40 @@
 # include <vector>
 
 template< class Container >
-	static size_t benchmark_test(Container& con, Container& vec)
+	static size_t benchmark_test(Container& con, Container& vec, std::vector< std::pair< std::string, size_t > >& result)
 {
 	Timer	time;
 
 	time.start_timer();
 	for (size_t i = 0; i < 500000; ++i)
 		con.push_back(test(i));
-	time.end_and_print("push_back");
+	result.push_back(std::make_pair("push_back", time.end_timer()));
 
 	time.start_timer();
 	con.insert(con.begin(), 250000, test(1, "insert"));
-	time.end_and_print("fill insert");
+	result.push_back(std::make_pair("fill insert", time.end_timer()));
 
 	time.start_timer();
 	while (con.size() > 1337)
 		con.pop_back();
-	time.end_and_print("pop back");
+	result.push_back(std::make_pair("pop_back", time.end_timer()));
 	
 	time.start_timer();
 	for (size_t i = 0; i < 42069; ++i)
 		vec.swap(con);
-	time.end_and_print("swap");
+	result.push_back(std::make_pair("swap", time.end_timer()));
 
 	vec.insert(vec.begin(), 42069, test(1, "erase"));
 
 	time.start_timer();
 	vec.erase(vec.begin(), vec.end() - 2500);
-	time.end_and_print("erase range");
+	result.push_back(std::make_pair("erase", time.end_timer()));
 
-	vec.insert(vec.begin(), 42069, test(1, "erase"));
+	vec.insert(vec.begin(), 42069, test(1, "erase range"));
 
 	time.start_timer();
 	vec.clear();
-	time.end_and_print("clear");
+	result.push_back(std::make_pair("clear", time.end_timer()));
 
 	time.start_timer();
 	for (size_t i = 0; i < 500; ++i) {
@@ -60,7 +60,7 @@ template< class Container >
 		vec.reserve(500000);
 		vec.clear();
 	}
-	time.end_and_print("Reserve");
+	result.push_back(std::make_pair("reserve", time.end_timer()));
 
 	for (size_t i = 0; i < vec.capacity(); i++)
 		vec.push_back(test(i));
@@ -70,30 +70,32 @@ template< class Container >
 		vec.resize(25000);
 		vec.resize(1337);
 	}
-	time.end_and_print("Resize");
+	result.push_back(std::make_pair("resize", time.end_timer()));
 	
 	time.start_timer();
 	for (size_t i = 0; i < 50; ++i) {
 		vec.assign(420, test(69));
 		vec.assign(200000, test(69));
 	}
-	time.end_and_print("assign");
+	result.push_back(std::make_pair("assign", time.end_timer()));
+
 	return (time.get_total_time());
 }
 
 void vector_benchmark()
 {
 	double ft_duration, std_duration;
+	std::vector< std::pair< std::string, size_t> > ft_result, std_result;
 	
-	print_benchmark_header("ft", "vector");
 	ft::vector<test> ft_con;
 	ft::vector<test> ft_vec;
-	ft_duration = benchmark_test(ft_con, ft_vec);
+	ft_duration = benchmark_test(ft_con, ft_vec, ft_result);
 
-	print_benchmark_header("std", "vector");
 	std::vector<test> std_con;
 	std::vector<test> std_vec;
-	std_duration = benchmark_test(std_con, std_vec);
+	std_duration = benchmark_test(std_con, std_vec, std_result);
+
+	format_benchmark_result(ft_result, std_result, "vector");
 
 	print_benchmark_result(ft_duration, std_duration, "vector");
 }

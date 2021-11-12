@@ -15,10 +15,11 @@
 /* ************************************************************************** */
 
 # include <test.hpp>
+# include <sstream>
 
 void	print_header(std::string header)
 {
-	std::cout << "-----------------" << COLOR_ORANGE;
+	std::cout << "\n-----------------" << COLOR_ORANGE;
 	std::cout << std::setw(15) << header << COLOR_RESET;
 	std::cout << "-----------------\n" << std::endl;
 }
@@ -72,17 +73,27 @@ size_t	Timer::get_total_time()
 void	Timer::end_and_print(const char* msg)
 {
 	size_t duration = this->end_timer();
-	this->print_time(duration, msg);
+	std::cout << this->format_time(duration, msg) << std::endl;
 	this->reset_timer();
 }
 
-void	Timer::print_time(size_t& time, const char * msg)
+std::string	Timer::end_and_format(const char* msg)
 {
-	std::cout	<< COLOR_PINK	<< std::setw(12) << std::right << msg\
-				<< COLOR_RESET  << " took: " \
-				<< COLOR_LBLUE	<< std::setw(10) << std::right << time \
-				<< COLOR_BLU	<< "µs" \
-				<< COLOR_RESET	<< std::endl;
+	size_t duration = this->end_timer();
+	this->reset_timer();
+	return (format_time(duration, msg));
+}
+
+std::string	Timer::format_time(size_t& time, const char * msg)
+{
+	std::stringstream ret;
+
+	ret	<< COLOR_PINK << std::setw(12) << std::right << msg\
+		<< COLOR_RESET  << " took: " \
+		<< COLOR_LBLUE	<< std::setw(10) << std::right << time \
+		<< COLOR_BLU	<< "µs" \
+		<< COLOR_RESET;
+	return (ret.str());
 }
 
 ////////////////
@@ -98,13 +109,11 @@ test::test(int val, std::string name)
 // Benchmark headers //
 ///////////////////////
 
-void	print_benchmark_header(const char* prefix, const char* type)
+void	print_benchmark_header(std::string prefix, std::string type)
 {
-	std::cout << "\n-----";
-	std::cout << COLOR_BLU << "BENCHMARK ";
 	std::cout << COLOR_GREEN << prefix;
 	std::cout << COLOR_RESET << "::" << COLOR_ORANGE << type << COLOR_RESET;
-	std::cout << "-----\n";
+	std::cout << "-----";
 }
 
 void	print_benchmark_result(double&	ft_dur, double& std_dur, const char* type)
@@ -122,5 +131,36 @@ void	print_benchmark_result(double&	ft_dur, double& std_dur, const char* type)
 	else {
 		std::cout << COLOR_RED << (float)100 - result << COLOR_RESET << "% ";
 		std::cout << "slower :(\n";
+	}
+}
+
+static size_t my_diff(size_t& first, size_t& second)
+{
+	if (first > second)
+		return (first - second);
+	return (second - first);
+}
+
+void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_rs,
+								std::vector< std::pair< std::string, size_t> >& std_rs,
+								std::string container)
+{
+	std::cout << "\n-----";
+	std::cout << COLOR_BLU << "BENCHMARK  ";
+	print_benchmark_header("ft", container);
+	print_benchmark_header("std", container);
+	std::cout << std::endl;
+	for (size_t i = 0; i < ft_rs.size(); ++i) {
+		std::cout	<< COLOR_PINK << std::setw(12) << std::right << ft_rs[i].first << COLOR_RESET  << " took: ";
+	
+		if (my_diff(ft_rs[i].second, std_rs[i].second) <= MILISECOND)
+			std::cout << COLOR_ORANGE;
+		else if (ft_rs[i].second > std_rs[i].second)
+			std::cout << COLOR_RED;
+		else
+			std::cout << COLOR_GREEN;
+		
+		std::cout << std::setw(10) << std::right << ft_rs[i].second << COLOR_BLU << "µs";
+		std::cout << COLOR_LBLUE << std::setw(10) << std::right << std_rs[i].second << COLOR_BLU << "µs\n" << COLOR_RESET;
 	}
 }

@@ -22,6 +22,8 @@
 # include <string>
 # include <sys/time.h>
 # include <stdlib.h>
+# include <vector>
+# include <utility>
 
 ///////////////////
 // COLOR DEFINES //
@@ -47,6 +49,9 @@
 
 	# define TEST_SUCCESS "[" COLOR_GREEN "OK" COLOR_RESET "] "
 	# define TEST_FAILURE "[" COLOR_RED	"KO" COLOR_RESET "] "
+
+
+	# define MILISECOND 1000
 
 /////////////
 // Utility //
@@ -153,12 +158,13 @@
 			Timer();
 			~Timer(){}
 			
-			void	reset_timer();
-			void	start_timer();
-			size_t	end_timer();
-			size_t	get_total_time();
-			void	end_and_print(const char* msg);
-			void	print_time(size_t& time, const char * msg);
+			void		reset_timer();
+			void		start_timer();
+			size_t		end_timer();
+			size_t		get_total_time();
+			void		end_and_print(const char* msg);
+			std::string	end_and_format(const char* msg);
+			std::string	format_time(size_t& time, const char * msg);
 
 	}; /* end of timer class */
 	
@@ -180,8 +186,11 @@
 // Benchmark headers //
 ///////////////////////
 
-void	print_benchmark_header(const char* prefix, const char* type);
+void	print_benchmark_header(std::string prefix, std::string type);
 void	print_benchmark_result(double&	ft_dur, double& std_dur, const char* type);
+void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_rs,\
+								std::vector< std::pair< std::string, size_t> >& std_rs,\
+								std::string container);
 
 
 /////////////////////
