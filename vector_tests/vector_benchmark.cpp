@@ -26,33 +26,33 @@ template< class Container >
 	time.start_timer();
 	for (size_t i = 0; i < 500000; ++i)
 		con.push_back(test(i));
-	result.push_back(std::make_pair("push_back", time.end_timer()));
+	result.push_back(std::make_pair("push_back", time.end_reset()));
 
 	time.start_timer();
 	con.insert(con.begin(), 250000, test(1, "insert"));
-	result.push_back(std::make_pair("fill insert", time.end_timer()));
+	result.push_back(std::make_pair("fill insert", time.end_reset()));
 
 	time.start_timer();
 	while (con.size() > 1337)
 		con.pop_back();
-	result.push_back(std::make_pair("pop_back", time.end_timer()));
+	result.push_back(std::make_pair("pop_back", time.end_reset()));
 	
 	time.start_timer();
 	for (size_t i = 0; i < 42069; ++i)
 		vec.swap(con);
-	result.push_back(std::make_pair("swap", time.end_timer()));
+	result.push_back(std::make_pair("swap", time.end_reset()));
 
 	vec.insert(vec.begin(), 42069, test(1, "erase"));
 
 	time.start_timer();
 	vec.erase(vec.begin(), vec.end() - 2500);
-	result.push_back(std::make_pair("erase", time.end_timer()));
+	result.push_back(std::make_pair("erase", time.end_reset()));
 
 	vec.insert(vec.begin(), 42069, test(1, "erase range"));
 
 	time.start_timer();
 	vec.clear();
-	result.push_back(std::make_pair("clear", time.end_timer()));
+	result.push_back(std::make_pair("clear", time.end_reset()));
 
 	time.start_timer();
 	for (size_t i = 0; i < 500; ++i) {
@@ -60,7 +60,7 @@ template< class Container >
 		vec.reserve(500000);
 		vec.clear();
 	}
-	result.push_back(std::make_pair("reserve", time.end_timer()));
+	result.push_back(std::make_pair("reserve", time.end_reset()));
 
 	for (size_t i = 0; i < vec.capacity(); i++)
 		vec.push_back(test(i));
@@ -70,14 +70,14 @@ template< class Container >
 		vec.resize(25000);
 		vec.resize(1337);
 	}
-	result.push_back(std::make_pair("resize", time.end_timer()));
+	result.push_back(std::make_pair("resize", time.end_reset()));
 	
 	time.start_timer();
 	for (size_t i = 0; i < 50; ++i) {
 		vec.assign(420, test(69));
 		vec.assign(200000, test(69));
 	}
-	result.push_back(std::make_pair("assign", time.end_timer()));
+	result.push_back(std::make_pair("assign", time.end_reset()));
 
 	return (time.get_total_time());
 }

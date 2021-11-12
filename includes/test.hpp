@@ -161,6 +161,7 @@
 			void		reset_timer();
 			void		start_timer();
 			size_t		end_timer();
+			size_t		end_reset();
 			size_t		get_total_time();
 			void		end_and_print(const char* msg);
 			std::string	end_and_format(const char* msg);

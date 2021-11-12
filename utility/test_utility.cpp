@@ -65,6 +65,13 @@ size_t Timer::end_timer()
 	return (_duration);
 }
 
+size_t Timer::end_reset()
+{
+	size_t duration = this->end_timer();
+	this->reset_timer();
+	return (duration);
+}
+
 size_t	Timer::get_total_time()
 {
 	return (_total_time);
@@ -112,8 +119,7 @@ test::test(int val, std::string name)
 void	print_benchmark_header(std::string prefix, std::string type)
 {
 	std::cout << COLOR_GREEN << prefix;
-	std::cout << COLOR_RESET << "::" << COLOR_ORANGE << type << COLOR_RESET;
-	std::cout << "-----";
+	std::cout << COLOR_RESET << "::" << COLOR_ORANGE << type << COLOR_RESET << std::setw(12) << std::left << std::setfill('-') << "";
 }
 
 void	print_benchmark_result(double&	ft_dur, double& std_dur, const char* type)
@@ -145,15 +151,14 @@ void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_
 								std::vector< std::pair< std::string, size_t> >& std_rs,
 								std::string container)
 {
-	std::cout << "\n-----";
-	std::cout << COLOR_BLU << "BENCHMARK  ";
+	std::cout << "\n" << std::setfill('-') << std::setw(21) << std::right;
+	std::cout << COLOR_BLU << "BENCHMARK ";
 	print_benchmark_header("ft", container);
-	print_benchmark_header("std", container);
-	std::cout << std::endl;
+	std::cout << std::endl << std::setfill(' ');
 	for (size_t i = 0; i < ft_rs.size(); ++i) {
 		std::cout	<< COLOR_PINK << std::setw(12) << std::right << ft_rs[i].first << COLOR_RESET  << " took: ";
 	
-		if (my_diff(ft_rs[i].second, std_rs[i].second) <= MILISECOND)
+		if (my_diff(ft_rs[i].second, std_rs[i].second) <= 2 *  MILISECOND)
 			std::cout << COLOR_ORANGE;
 		else if (ft_rs[i].second > std_rs[i].second)
 			std::cout << COLOR_RED;
