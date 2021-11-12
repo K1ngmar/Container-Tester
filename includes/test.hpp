@@ -199,5 +199,7 @@ void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_
 /////////////////////
 
 	void	vector_unit();
+	void	vector_benchmark();
+	void	deqtor_unit();
 
 #endif

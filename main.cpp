@@ -15,15 +15,15 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
-void vector_unit();
-void vector_benchmark();
+#include <test.hpp>
 
 int main()
 {
 	srand(42);
 	vector_unit();
-	vector_benchmark();
+	// vector_benchmark();
+
+	deqtor_unit();
 
 	system("leaks container_test | grep 'leaks for'");
 	return(0);

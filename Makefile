@@ -25,7 +25,8 @@ DEBUG_FLAGS	=	-g -fsanitize=address
 SRC			=	main.cpp \
 				utility/test_utility.cpp \
 				vector_tests/vector_unit.cpp \
-				vector_tests/vector_benchmark.cpp
+				vector_tests/vector_benchmark.cpp \
+				deque_tests/deque_unit.cpp
 
 HEADER_LOC	=	-I ../Containers/deque/				\
 				-I ../Containers/utility/			\
