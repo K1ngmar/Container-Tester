@@ -15,16 +15,18 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <test.hpp>
+#include <test_utility.hpp>
 
 int main()
 {
 	srand(42);
+
 	vector_unit();
-	// vector_benchmark();
+	vector_benchmark();
 
 	deqtor_unit();
 
+	std::cout << std::endl;
 	system("leaks container_test | grep 'leaks for'");
 	return(0);
 }

@@ -17,7 +17,7 @@
 #ifndef REAL_COOL_BENCHMARK_CLASS_HPP
 # define REAL_COOL_BENCHMARK_CLASS_HPP
 
-# include <test.hpp>
+# include <test_utility.hpp>
 # include <map>
 
 template< class Container >
