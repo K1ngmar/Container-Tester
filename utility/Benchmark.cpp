@@ -90,10 +90,11 @@ void	print_benchmark_result(double ft_dur, double std_dur, const char* type)
 	std::cout << " was ";
 	if (result >= (float)100) {
 		std::cout << COLOR_GREEN << result - (float)100 << COLOR_RESET << "% ";
-		std::cout << "faster " << COLOR_YELLOW << ":D\n";
+		std::cout << "faster " << COLOR_YELLOW << "ヽ(o＾▽＾o)ノ\n";
 	}
 	else {
 		std::cout << COLOR_RED << (float)100 - result << COLOR_RESET << "% ";
-		std::cout << "slower " << COLOR_OYELLOW << ":(\n";
+		std::cout << "slower " << COLOR_OYELLOW << "(っ˘̩╭╮˘̩)っ\n";
 	}
+	std::cout << COLOR_RESET;
 }
