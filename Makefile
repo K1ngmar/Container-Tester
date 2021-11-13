@@ -28,6 +28,7 @@ FLAGS		=	-std=c++98 -pedantic -Wall -Werror -Wextra
 DEBUG_FLAGS	=	-g -fsanitize=address
 
 SRC			=	main.cpp \
+				Fadey/fadey.cpp \
 				utility/test_utility.cpp \
 				utility/benchmark.cpp \
 				vector_tests/vector_unit.cpp \
@@ -50,7 +51,8 @@ HEADER_LOC	=	-I ../Containers/deque/				\
 				-I ../Containers/unordered_map/		\
 				-I ../Containers/vector/
 
-TEST_HEADER =	-I includes/
+TEST_HEADER =	-I includes/ \
+				-I Fadey/
 
 RM 			=	rm -f
 

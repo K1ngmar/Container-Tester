@@ -21,10 +21,19 @@
 
 #include <stdlib.h>
 #include <test_utility.hpp>
+#include <fadey.hpp>
+#include <fstream>
+#include <sstream>
 
 int main()
 {
-	srand(42);
+	srand(69);
+	fadey fade;
+
+	std::ifstream file("BANNER");
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	std::cout << fade.fadify(buffer.str()) << std::endl;
 
 	vector_unit();
 	vector_benchmark();
