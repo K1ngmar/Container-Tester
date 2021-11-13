@@ -27,7 +27,9 @@ int main()
 	deqtor_unit();
 	deqtor_benchmark();
 
-	std::cout << std::endl;
-	system("leaks container_test | grep 'leaks for'");
+	#ifndef DEBUG
+		std::cout << std::endl;
+		system("leaks container_test | grep 'leaks for'");
+	#endif
 	return(0);
 }
