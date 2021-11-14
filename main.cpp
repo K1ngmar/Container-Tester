@@ -32,7 +32,7 @@ int main()
 	std::ifstream file("BANNER");
 	std::stringstream buffer;
 	buffer << file.rdbuf();
-	fadey << buffer.str() << std::endl;
+	km::fadey << buffer.str() << std::endl;
 
 	vector_unit();
 	vector_benchmark();
