@@ -28,7 +28,6 @@ FLAGS		=	-std=c++98 -pedantic -Wall -Werror -Wextra
 DEBUG_FLAGS	=	-g -fsanitize=address
 
 SRC			=	main.cpp \
-				Fadey/fadey.cpp \
 				utility/test_utility.cpp \
 				utility/benchmark.cpp \
 				vector_tests/vector_unit.cpp \
@@ -36,7 +35,8 @@ SRC			=	main.cpp \
 				deque_tests/deque_unit.cpp \
 				deque_tests/deque_benchmark.cpp
 
-HEADER_LOC	=	-I ../Containers/deque/				\
+HEADER_LOC	=	-I ./Fadey/includes/				\
+				-I ../Containers/deque/				\
 				-I ../Containers/utility/			\
 				-I ../Containers/iterator/			\
 				-I ../Containers/list/				\
@@ -51,15 +51,19 @@ HEADER_LOC	=	-I ../Containers/deque/				\
 				-I ../Containers/unordered_map/		\
 				-I ../Containers/vector/
 
-TEST_HEADER =	-I includes/ \
-				-I Fadey/
+TEST_HEADER =	-I includes/
+
+LIBRARIES	=	Fadey/libfadey.a
 
 RM 			=	rm -f
 
 all: $(NAME)
 
-$(NAME): $(SRC)
-	$(CC) $(FLAGS) $(SRC) $(HEADER_LOC) $(TEST_HEADER) -o $(NAME)
+$(NAME): make_fadey $(SRC)
+	$(CC) $(FLAGS) $(SRC) $(LIBRARIES) $(HEADER_LOC) $(TEST_HEADER) -o $(NAME)
+
+make_fadey:
+	make -C Fadey/
 
 clean:
 	$(RM) $(OBJ)
@@ -75,4 +79,4 @@ run: re
 test: run
 
 debug: fclean
-	$(CC) $(FLAGS) $(HEADER_LOC) $(TEST_HEADER) $(DEBUG_FLAGS) $(SRC) -D DEBUG -o $(NAME)
+	$(CC) $(FLAGS) $(HEADER_LOC) $(TEST_HEADER) $(DEBUG_FLAGS) $(SRC) $(LIBRARIES) -D DEBUG -o $(NAME)

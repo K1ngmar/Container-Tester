@@ -28,12 +28,11 @@
 int main()
 {
 	srand(69);
-	fadey fade;
 
 	std::ifstream file("BANNER");
 	std::stringstream buffer;
 	buffer << file.rdbuf();
-	std::cout << fade.fadify(buffer.str()) << std::endl;
+	fadey << buffer.str() << std::endl;
 
 	vector_unit();
 	vector_benchmark();
