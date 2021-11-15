@@ -158,6 +158,8 @@ static void modifier_test()
 /* insert */
 	for (size_t i = 0; i < 5000; i++) {
 		ft_map.insert(ft::make_pair(i, std::string("yos")));
+		ft_map.insert(ft::make_pair(i, std::string("yos")));
+		std_map.insert(std::make_pair(i, std::string("yos")));
 		std_map.insert(std::make_pair(i, std::string("yos")));
 	}
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "insert");

@@ -34,11 +34,11 @@ int main()
 	buffer << file.rdbuf();
 	km::fadey << buffer.str() << std::endl;
 
-	// vector_unit();
-	// vector_benchmark();
+	vector_unit();
+	vector_benchmark();
 
-	// deqtor_unit();
-	// deqtor_benchmark();
+	deqtor_unit();
+	deqtor_benchmark();
 
 	map_unit();
 
