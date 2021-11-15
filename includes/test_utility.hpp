@@ -125,8 +125,19 @@
 		}
 	}
 
-	template <class ft_vec, class std_vec>
-		bool	compare_these_iterators_yo(ft_vec& ft, std_vec& std)
+	template < class ft_val, class ft_itr, class std_val, class std_itr >
+		void	compare(ft_val& ft_con, ft_itr ft_i, std_val& std_con, std_itr std_i, bool(*comp)(ft_val&, ft_itr, std_val&, std_itr), const char* test)
+	{
+		if (comp(ft_con, ft_i, std_con, std_i) == true)
+			std::cout << TEST_SUCCESS;
+		else {
+			std::cout << TEST_FAILURE;
+			std::cout << "test: " << test << std::endl;
+		}
+	}
+
+	template <class ft_itr, class std_itr>
+		bool	compare_these_iterators_yo(ft_itr& ft, std_itr& std)
 	{
 		if (*ft != *std) {
 			print_difference(*std, *ft);
@@ -135,8 +146,24 @@
 		return (true);
 	}
 
-	template <class ft_vec, class std_vec>
-		bool	compare_these_values_yo(ft_vec& ft, std_vec& std)
+	template <class ft_itr, class std_itr>
+		bool	compare_these_map_iterators_yo(ft_itr& ft, std_itr& std)
+	{
+		if ((*ft).first != (*std).first) {
+			std::cout << "difference in first value:\n";
+			print_difference((*ft).first, (*std).first);
+			return false;
+		}
+		if ((*ft).second != (*std).second) {
+			std::cout << "difference in second value\n";
+			print_difference((*ft).second, (*std).second);
+			return false;
+		}
+		return (true);
+	}
+
+	template <class ft_val, class std_val>
+		bool	compare_these_values_yo(ft_val& ft, std_val& std)
 	{
 		if (ft != std) {
 			print_difference(std, ft);
@@ -207,5 +234,6 @@ void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_
 	void	vector_benchmark();
 	void	deqtor_unit();
 	void	deqtor_benchmark();
+	void	map_unit();
 
 #endif
