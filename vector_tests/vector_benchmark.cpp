@@ -98,6 +98,15 @@ template < class Container >
 	}
 }
 
+template < class Container >
+	static void bench_assign_operator(Container& con, Container& con_too)
+{
+	for (size_t i = 0; i < 5000; ++i) {
+		con = con_too;
+		con_too = con;
+	}
+}
+
 template < class Bench >
 	static void bench_tests(Bench& bench)
 {
@@ -122,6 +131,7 @@ template < class Bench >
 	fill_container(bench.get_container());
 	bench.run_test(bench_resize, "resize");
 	bench.run_test(bench_assign, "assign");
+	bench.run_test(bench_assign_operator, "assign opr");
 }
 
 void vector_benchmark()

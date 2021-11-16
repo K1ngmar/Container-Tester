@@ -83,10 +83,20 @@ static void constructor_test()
 	std::vector<int> std_cc(std_rc);
 	compare(ft_cc, std_cc, compare_these_vectors_yo, "Copy constructor");
 
+	ft_rc.pop_back();
+	std_rc.pop_back();
+	compare(ft_rc, std_rc, compare_these_vectors_yo, "pop back()");
+	compare(ft_cc, std_cc, compare_these_vectors_yo, "Deep copy (copy constructor)");
+
 // /* assigantion operator */
 	ft::vector<int> ft_ass = ft_cc;
 	std::vector<int> std_ass = std_cc;
 	compare(ft_ass, std_ass, compare_these_vectors_yo, "Assignation operator");
+
+	ft_cc.erase(ft_cc.end() - 5);
+	std_cc.erase(std_cc.end() - 5);
+	compare(ft_cc, std_cc, compare_these_vectors_yo, "erase(pos)");
+	compare(ft_ass, std_ass, compare_these_vectors_yo, "Deep copy (assignation operator)");
 }
 
 ///////////////////

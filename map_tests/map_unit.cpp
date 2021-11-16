@@ -43,7 +43,8 @@ bool	compare_these_maps_yo(ft_map& ft, ft_itr fitr, std_map& std, std_itr sitr)
 		return false;
 	}
 	while(fitr != ft.end()) {
-		compare_these_map_iterators_yo(fitr, sitr);
+		if (compare_these_map_iterators_yo(fitr, sitr) == false)
+			return false;
 		fitr++;
 		sitr++;
 	}
@@ -78,10 +79,24 @@ static void constructor_test()
 	std::map<int, std::string> std_cc(std_dc);
 	compare(ft_cc, ft_cc.begin(), std_cc, std_cc.begin(), compare_these_maps_yo, "copy constructor");
 
+/* test for deep copy */
+	ft_dc.erase(ft_dc.begin());
+	std_dc.erase(std_dc.begin());
+	compare(ft_dc, ft_dc.begin(), std_dc, std_dc.begin(), compare_these_maps_yo, "deep copy (copy construcor)");
+	compare(ft_cc, ft_cc.begin(), std_cc, std_cc.begin(), compare_these_maps_yo, "deep copy (copy construcor)");
+
+
 /* assigantion operator */
 	ft::map<int, std::string> ft_ass = ft_cc;
 	std::map<int, std::string> std_ass = std_cc;
 	compare(ft_ass, ft_ass.begin(), std_ass, std_ass.begin(), compare_these_maps_yo, "assignation operator");
+
+/* test for deep copy */
+	ft_cc.erase(++(ft_dc.begin()));
+	std_cc.erase(++(std_dc.begin()));
+	compare(ft_cc, ft_cc.begin(), std_cc, std_cc.begin(), compare_these_maps_yo, "deep copy (copy construcor)");
+	compare(ft_dc, ft_dc.begin(), std_dc, std_dc.begin(), compare_these_maps_yo, "deep copy (copy construcor)");
+
 }
 
 ///////////////////
