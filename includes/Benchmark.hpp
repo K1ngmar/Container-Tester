@@ -69,6 +69,15 @@ public:
 		results[test_name] += time.end_reset();
 	}
 
+	template < class p >
+		void	run_test(void(*func)(Container&, p(*mp)(size_t, test)), p(*mp)(size_t, test), std::string test_name)
+	{
+		time.start_timer();
+		func(con, mp);
+		results[test_name] += time.end_reset();
+	}
+
+
 	size_t	get_total_time()
 	{
 		return (time.get_total_time());

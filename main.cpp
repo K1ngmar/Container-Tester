@@ -41,6 +41,7 @@ int main()
 	deqtor_benchmark();
 
 	map_unit();
+	map_benchmark();
 
 	#ifndef DEBUG
 		std::cout << std::endl;

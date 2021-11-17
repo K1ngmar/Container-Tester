@@ -34,7 +34,8 @@ SRC			=	main.cpp \
 				vector_tests/vector_benchmark.cpp \
 				deque_tests/deque_unit.cpp \
 				deque_tests/deque_benchmark.cpp \
-				map_tests/map_unit.cpp
+				map_tests/map_unit.cpp \
+				map_tests/map_benchmark.cpp
 
 HEADER_LOC	=	-I ./Fadey/includes/				\
 				-I ../Containers/deque/				\
