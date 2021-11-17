@@ -93,7 +93,14 @@ void	print_benchmark_result(double ft_dur, double std_dur, const char* type)
 	std::cout << "::" << COLOR_ORANGE << type << COLOR_RESET;
 	std::cout << std::fixed << std::setprecision(2);
 	std::cout << " was ";
-	if (result >= (float)100) {
+	if (result >= (float)95 && result <= (float)105) {
+		if  (result <= (float)100)
+			std::cout << COLOR_ORANGE << (float)100 - result << COLOR_RESET << "% slower";
+		else 
+			std::cout << COLOR_ORANGE << result - (float)100 << COLOR_RESET << "% faster";
+		std::cout << COLOR_LBLUE << " (￢_￢;)\n";
+	}
+	else if (result >= (float)100) {
 		std::cout << COLOR_GREEN << result - (float)100 << COLOR_RESET << "% ";
 		std::cout << "faster " << COLOR_YELLOW << "ヽ(o＾▽＾o)ノ\n";
 	}

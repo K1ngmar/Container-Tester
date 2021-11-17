@@ -20,12 +20,20 @@
 /* ************************************************************************** */
 
 # include <test_utility.hpp>
+# include <fadey.hpp>
+# include <sstream>
 
 void	print_header(std::string header)
 {
-	std::cout << "\n-----------------" << COLOR_ORANGE;
-	std::cout << std::setw(15) << header << COLOR_RESET;
-	std::cout << "-----------------\n" << std::endl;
+	int width = 80;
+	int padding = (width - header.length()) / 2;
+	std::stringstream	hdr;
+
+	hdr << "\n|" << std::setw(width) << std::setfill('-') << "|\n";
+	hdr << "|" << std::setw(padding + header.length()) << std::setfill(' ') << header << std::setw(padding + (width - header.length()) % 2) << std::setfill(' ') << "|\n";
+	hdr << "|" << std::setw(width) << std::setfill('-') << "|\n";
+	
+	km::fadey << hdr.str() << "\n";
 }
 
 void	start_test(std::string name, void(*func)())
