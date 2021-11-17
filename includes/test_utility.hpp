@@ -235,5 +235,6 @@ void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_
 	void	deqtor_unit();
 	void	deqtor_benchmark();
 	void	map_unit();
+	void	map_benchmark();
 
 #endif

@@ -25,13 +25,13 @@
 
 void	print_header(std::string header)
 {
-	int width = 80;
+	int width = 82;
 	int padding = (width - header.length()) / 2;
 	std::stringstream	hdr;
 
-	hdr << "\n|" << std::setw(width) << std::setfill('-') << "|\n";
-	hdr << "|" << std::setw(padding + header.length()) << std::setfill(' ') << header << std::setw(padding + (width - header.length()) % 2) << std::setfill(' ') << "|\n";
-	hdr << "|" << std::setw(width) << std::setfill('-') << "|\n";
+	hdr << "\n┌" << std::setw(width) << std::setfill('-') << "┐\n";
+	hdr << "│" << std::setw(padding + header.length()) << std::setfill(' ') << header << std::setw(padding + (width - header.length()) % 2) << std::setfill(' ') << "│\n";
+	hdr << "└" << std::setw(width) << std::setfill('-') << "┘\n";
 	
 	km::fadey << hdr.str() << "\n";
 }

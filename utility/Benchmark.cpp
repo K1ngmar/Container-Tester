@@ -28,15 +28,6 @@ void	print_benchmark_container(std::string prefix, std::string type)
 	std::cout << COLOR_RESET << "::" << COLOR_ORANGE << type << COLOR_RESET << std::setw(12) << std::left << std::setfill('-') << "";
 }
 
-void	print_benchmark_header(std::string& container)
-{
-	std::cout << "\n" << std::setfill('-') << std::setw(21) << std::right;
-	std::cout << COLOR_BLU << "BENCHMARK ";
-
-	print_benchmark_container("ft", container);
-	std::cout << std::endl << std::setfill(' ');
-}
-
 static size_t my_diff(size_t& first, size_t& second)
 {
 	if (first > second)
@@ -59,7 +50,7 @@ void	format_benchmark_result(std::map< std::string, size_t >	& ft_rs,
 								std::map< std::string, size_t >	& std_rs,
 								std::string container)
 {
-	print_benchmark_header(container);
+	print_header(std::string("Benchmark results for ft::") + container);
 
 	std::map< std::string, size_t >::iterator ft_itr = ft_rs.begin();
 	std::map< std::string, size_t >::iterator std_itr = std_rs.begin();
@@ -71,14 +62,14 @@ void	format_benchmark_result(std::map< std::string, size_t >	& ft_rs,
 		std_time = (*std_itr).second;
 
 		/* test name */
-		std::cout	<< COLOR_PINK << std::setw(12) << std::right << (*ft_itr).first << COLOR_RESET  << " took: ";
+		std::cout	<< COLOR_PINK << std::setw(20) << std::right << (*ft_itr).first << COLOR_RESET  << " took: ";
 	
 		/* ft result */
 		set_performance_color(ft_time, std_time);
-		std::cout << std::setw(10) << std::right << ft_time << COLOR_BLU << "µs";
+		std::cout << std::setw(24) << std::right << ft_time << COLOR_BLU << "µs";
 
 		/* std result */
-		std::cout << COLOR_LBLUE << std::setw(10) << std::right << std_time << COLOR_BLU << "µs\n" << COLOR_RESET;
+		std::cout << COLOR_LBLUE << std::setw(24) << std::right << std_time << COLOR_BLU << "µs\n" << COLOR_RESET;
 
 		++ft_itr;
 		++std_itr;
