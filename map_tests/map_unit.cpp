@@ -144,9 +144,9 @@ static void iterator_test()
 	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "end() - 1");
 
 /* testing const end() */
-	// ft_citr = ft_map.end() - 1;
-	// std_citr = std_map.end() - 1;
-	// compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const end() - 1");
+// 	ft_citr = ft_map.end() - 1;
+// 	std_citr = std_map.end() - 1;
+// 	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const end() - 1");
 
 
 	/* do some reverse const iterator test you imbecile */
@@ -157,6 +157,28 @@ static void iterator_test()
 ////////////////////
 static void element_access_test()
 {
+	ft::map<std::string, unsigned char>		ft_map;
+	std::map<std::string, unsigned char>	std_map;
+
+	for (size_t i = 0; i < 1337; i++) {
+		ft_map[std::to_string(i)] = (unsigned char)i;
+		std_map[std::to_string(i)] = (unsigned char)i;
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "operator []");
+
+	for (size_t i = 0; i < 1337; i++) {
+		ft_map[std::to_string(i)] = (unsigned char)i;
+		std_map[std::to_string(i)] = (unsigned char)i;
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "operator []");
+
+	size_t rando;
+	for (size_t i = 0; i < 1337; i++) {
+		rando = rand();
+		ft_map[std::to_string(rando)] = (unsigned char)i;
+		std_map[std::to_string(rando)] = (unsigned char)i;
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "operator []");
 }
 
 ///////////////
@@ -168,7 +190,6 @@ static void modifier_test()
 	std::map<size_t, std::string>	std_map;
 	ft::map<size_t, std::string>	ft_empty;
 	std::map<size_t, std::string>	std_empty;
-
 
 /* insert */
 	for (size_t i = 0; i < 5000; i++) {
