@@ -160,6 +160,7 @@ static void element_access_test()
 	ft::map<std::string, unsigned char>		ft_map;
 	std::map<std::string, unsigned char>	std_map;
 
+/* opeartor [] */
 	for (size_t i = 0; i < 1337; i++) {
 		ft_map[std::to_string(i)] = (unsigned char)i;
 		std_map[std::to_string(i)] = (unsigned char)i;
@@ -179,6 +180,19 @@ static void element_access_test()
 		std_map[std::to_string(rando)] = (unsigned char)i;
 	}
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "operator []");
+
+/* swap */
+	ft::map<std::string, unsigned char>				ft_tbs;
+	std::map<std::string, unsigned char>			std_tbs;
+	ft_tbs["I am going to be swapped"] = 69;
+	std_tbs["I am going to be swapped"] = 69;
+	ft::map<std::string, unsigned char>::iterator	ft_itr = ft_map.begin();
+	std::map<std::string, unsigned char>::iterator	std_itr = std_map.begin();
+
+	ft_map.swap(ft_tbs);
+	std_map.swap(std_tbs);
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "swap");
+	compare(ft_tbs, ft_itr, std_tbs, std_itr, compare_these_maps_yo, "swap");
 }
 
 ///////////////
