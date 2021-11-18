@@ -151,12 +151,12 @@
 	{
 		if ((*ft).first != (*std).first) {
 			std::cout << "difference in first value:\n";
-			print_difference((*ft).first, (*std).first);
+			print_difference((*std).first, (*ft).first);
 			return false;
 		}
 		if ((*ft).second != (*std).second) {
 			std::cout << "difference in second value\n";
-			print_difference((*ft).second, (*std).second);
+			print_difference((*std).second, (*ft).second);
 			return false;
 		}
 		return (true);
