@@ -66,10 +66,19 @@ template < class Container >
 	con.clear();
 }
 
+template < class Container >
+	static void	bench_assignation(Container& con, Container& con_tba)
+{
+	con_tba = con;
+}
+
 template < class Bench, class p>
 	static void bench_tests(Bench& bench, p(*mp)(size_t, test))
 {
 	bench.run_test(bench_insert, mp, "insert");
+	
+	bench.run_test(bench_assignation, "assignation operator");
+
 	bench.run_test(bench_insert, mp, "(ek) insert");
 	bench.run_test(bench_erase, "erase");
 	bench.run_test(bench_elem_access, "operator []");
@@ -79,6 +88,7 @@ template < class Bench, class p>
 		bench_fill_container(bench.get_container(), mp);
 		bench.run_test(bench_clear, "clear");
 	}
+
 }
 
 void map_benchmark()
