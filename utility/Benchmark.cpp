@@ -56,6 +56,10 @@ void	format_benchmark_result(std::map< std::string, size_t >	& ft_rs,
 	std::map< std::string, size_t >::iterator std_itr = std_rs.begin();
 
 	size_t ft_time, std_time;
+	std::string ft_con, std_con;
+	ft_con = std::string(COLOR_GREEN) + "ft" + COLOR_RESET + "::" + COLOR_ORANGE + container;
+	std_con = std::string(COLOR_GREEN) + "std" + COLOR_RESET + "::" + COLOR_ORANGE + container + "\n";
+	std::cout << std::setw(73) << ft_con << std::setw(47) << std_con << std::endl; 
 	while (ft_itr != ft_rs.end())
 	{
 		ft_time = (*ft_itr).second;
