@@ -77,10 +77,12 @@ template < class Bench, class p>
 {
 	bench.run_test(bench_insert, mp, "insert");
 	
-	bench.run_test(bench_assignation, "assignation operator");
-
 	bench.run_test(bench_insert, mp, "(ek) insert");
 	bench.run_test(bench_erase, "erase");
+
+	for (size_t i = 0; i < 420; i++)
+		bench.run_test(bench_assignation, "assignation operator");
+
 	bench.run_test(bench_elem_access, "operator []");
 	bench.run_test(bench_elem_access, "(ek) operator []");
 
