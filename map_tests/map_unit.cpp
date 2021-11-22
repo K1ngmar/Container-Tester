@@ -123,9 +123,9 @@ static void iterator_test()
 	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "begin()");
 
 /* testing const begin */
-	// ft_citr = ft_map.begin();
-	// std_citr = std_map.begin();
-	// compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const begin()");
+	ft_citr = ft_map.begin();
+	std_citr = std_map.begin();
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const begin()");
 
 
 	ft::map<int, int>	ft_empty;
@@ -144,9 +144,9 @@ static void iterator_test()
 	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "end() - 1");
 
 /* testing const end() */
-// 	ft_citr = ft_map.end() - 1;
-// 	std_citr = std_map.end() - 1;
-// 	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const end() - 1");
+	ft_citr = --ft_map.end();
+	std_citr = --std_map.end();
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const end() - 1");
 
 
 	/* do some reverse const iterator test you imbecile */
@@ -227,6 +227,43 @@ static void modifier_test()
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "clear");
 }
 
+static void operations_test()
+{
+	ft::map<size_t, char>					ft_map;
+	std::map<size_t, char>					std_map;
+	ft::map<size_t, char>::iterator 		ft_itr;
+	ft::map<size_t, char>::const_iterator 	ft_citr;
+	std::map<size_t, char>::iterator		std_itr;
+	std::map<size_t, char>::const_iterator	std_citr;
+
+	for (size_t i = 0; i < 420; i++) {
+		ft_map[i] = (char)i;
+		std_map[i] = (char)i;
+	}
+
+	/* find */
+	ft_itr = ft_map.find((size_t)69);
+	std_itr = std_map.find((size_t)69);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "find existing element");
+	
+	/* const find */
+	ft_citr = ft_map.find((size_t)42);
+	std_citr = std_map.find((size_t)42);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const find existing element");
+
+	/* find non existing */
+	ft_itr = --ft_map.find((size_t)1337);
+	std_itr = --std_map.find((size_t)1337);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "find non existing element");
+	
+	/* const find non existing */
+	ft_citr = --ft_map.find((size_t)1337);
+	std_citr = --std_map.find((size_t)1337);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const find non existing element");
+
+
+}
+
 void	map_unit()
 {
 	print_header("map member functions");
@@ -234,5 +271,6 @@ void	map_unit()
 	start_test("constructor", constructor_test);
 	start_test("iterator", iterator_test);
 	start_test("element access", element_access_test); 
-	start_test("modifier test", modifier_test);
+	start_test("modifiers", modifier_test);
+	start_test("operations", operations_test);
 }
