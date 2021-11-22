@@ -150,12 +150,12 @@
 		bool	compare_these_map_iterators_yo(ft_itr& ft, std_itr& std)
 	{
 		if ((*ft).first != (*std).first) {
-			std::cout << "difference in first value:\n";
+			std::cout << "\ndifference in first value:\n";
 			print_difference((*std).first, (*ft).first);
 			return false;
 		}
 		if ((*ft).second != (*std).second) {
-			std::cout << "difference in second value\n";
+			std::cout << "\ndifference in second value\n";
 			print_difference((*std).second, (*ft).second);
 			return false;
 		}
