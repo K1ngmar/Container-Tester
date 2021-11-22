@@ -261,6 +261,15 @@ static void operations_test()
 	std_citr = --std_map.find((size_t)1337);
 	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const find non existing element");
 
+	/* count */
+	bool ft_res = ft_map.count(21);
+	bool std_res = std_map.count(21);
+	compare(ft_res, std_res, compare_these_values_yo, "count exists");
+
+	/* count non existante */
+	ft_res = ft_map.count(42069);
+	std_res = std_map.count(42069);
+	compare(ft_res, std_res, compare_these_values_yo, "count doesn't exists");
 
 }
 
