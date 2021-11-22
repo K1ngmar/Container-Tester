@@ -271,6 +271,58 @@ static void operations_test()
 	std_res = std_map.count(42069);
 	compare(ft_res, std_res, compare_these_values_yo, "count doesn't exists");
 
+	/* lower bound */
+	ft_itr = ft_map.lower_bound((size_t)200);
+	std_itr = std_map.lower_bound((size_t)200);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "lower bound");
+	
+	/* lower bound  const */
+	ft_citr = ft_map.lower_bound((size_t)69);
+	std_citr = std_map.lower_bound((size_t)69);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const lower bound");
+
+	/* lower bound existing */
+	ft_itr = --ft_map.lower_bound((size_t)-1);
+	std_itr = --std_map.lower_bound((size_t)-1);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "lower bound non existent");
+	
+	/* lower bound non existing */
+	ft_citr = --ft_map.lower_bound((size_t)-42);
+	std_citr = --std_map.lower_bound((size_t)-42);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const lower bound non existent");
+
+	/* lower bound */
+	ft_map[1337] = 'a';
+	std_map[1337] = 'a';
+	ft_itr = ft_map.lower_bound(1200);
+	std_itr = std_map.lower_bound(1200);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "lower bound");
+
+	/* upper bound */
+	ft_itr = ft_map.upper_bound((size_t)200);
+	std_itr = std_map.upper_bound((size_t)200);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "upper bound");
+	
+	/* upper bound  const */
+	ft_citr = ft_map.upper_bound((size_t)69);
+	std_citr = std_map.upper_bound((size_t)69);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const upper bound");
+
+	/* upper bound existing */
+	ft_itr = --ft_map.upper_bound((size_t)-1);
+	std_itr = --std_map.upper_bound((size_t)-1);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "upper bound non existent");
+	
+	/* upper bound non existing */
+	ft_citr = --ft_map.upper_bound((size_t)-42);
+	std_citr = --std_map.upper_bound((size_t)-42);
+	compare(ft_citr, std_citr, compare_these_map_iterators_yo, "const upper bound non existent");
+
+	/* upper bound */
+	ft_itr = ft_map.upper_bound(1200);
+	std_itr = std_map.upper_bound(1200);
+	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "upper bound");
+
 }
 
 void	map_unit()
