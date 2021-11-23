@@ -229,12 +229,17 @@ static void modifier_test()
 
 static void operations_test()
 {
-	ft::map<size_t, char>					ft_map;
-	std::map<size_t, char>					std_map;
-	ft::map<size_t, char>::iterator 		ft_itr;
-	ft::map<size_t, char>::const_iterator 	ft_citr;
-	std::map<size_t, char>::iterator		std_itr;
-	std::map<size_t, char>::const_iterator	std_citr;
+	typedef ft::map<size_t, char>::iterator			ft_iterator;
+	typedef ft::map<size_t, char>::const_iterator	ft_citerator;
+	typedef std::map<size_t, char>::iterator		std_iterator;
+	typedef std::map<size_t, char>::const_iterator	std_citerator;
+
+	ft::map<size_t, char>		ft_map;
+	std::map<size_t, char>		std_map;
+	ft_iterator					ft_itr;
+	ft_citerator				ft_citr;
+	std_iterator				std_itr;
+	std_citerator				std_citr;
 
 	for (size_t i = 0; i < 420; i++) {
 		ft_map[i] = (char)i;
@@ -322,6 +327,38 @@ static void operations_test()
 	ft_itr = ft_map.upper_bound(1200);
 	std_itr = std_map.upper_bound(1200);
 	compare(ft_itr, std_itr, compare_these_map_iterators_yo, "upper bound");
+
+	/* equal range */
+	ft::pair<ft_iterator, ft_iterator>		ft_pair;
+	std::pair<std_iterator, std_iterator>	std_pair;
+	ft::pair<ft_citerator, ft_citerator>	ft_cpair;
+	std::pair<std_citerator, std_citerator>	std_cpair;
+
+	ft_pair = ft_map.equal_range((size_t)200);
+	std_pair = std_map.equal_range((size_t)200);
+	compare(ft_pair, std_pair, compare_these_pairs_yo, "equal range");
+
+	/* equal range  const */
+	ft_cpair = ft_map.equal_range((size_t)69);
+	std_cpair = std_map.equal_range((size_t)69);
+	compare(ft_cpair, std_cpair, compare_these_pairs_yo, "const equal range");
+
+	/* equal range existing */
+	ft_pair = ft_map.equal_range((size_t)-1);
+	std_pair = std_map.equal_range((size_t)-1);
+	ft_pair.first--; ft_pair.second--; std_pair.first--; std_pair.second--;
+	compare(ft_pair, std_pair, compare_these_pairs_yo, "equal range non existent");
+	
+	/* equal range non existing */
+	ft_cpair = ft_map.equal_range((size_t)-42);
+	std_cpair = std_map.equal_range((size_t)-42);
+	ft_cpair.first--; ft_cpair.second--; std_cpair.first--; std_cpair.second--;
+	compare(ft_cpair, std_cpair, compare_these_pairs_yo, "const equal range non existent");
+
+	/* equal range */
+	ft_pair = ft_map.equal_range(1200);
+	std_pair = std_map.equal_range(1200);
+	compare(ft_pair, std_pair, compare_these_pairs_yo, "equal range");
 
 }
 

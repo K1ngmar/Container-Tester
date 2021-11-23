@@ -162,6 +162,20 @@
 		return (true);
 	}
 
+	template < class ft_pair, class std_pair >
+		bool	compare_these_pairs_yo(ft_pair& ft_pr, std_pair& std_pr)
+	{
+		if (compare_these_map_iterators_yo(ft_pr.first, std_pr.first) == false) {
+			std::cout << "Difference in key\n";
+			return (false);
+		}
+		if (compare_these_map_iterators_yo(ft_pr.second, std_pr.second) == false) {
+			std::cout << "Difference in mapped type\n";
+			return false;
+		}
+		return (true);
+	}
+
 	template <class ft_val, class std_val>
 		bool	compare_these_values_yo(ft_val& ft, std_val& std)
 	{
