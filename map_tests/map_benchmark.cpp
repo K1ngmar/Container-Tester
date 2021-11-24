@@ -46,6 +46,19 @@ template < class Container>
 		con.erase(con.begin());
 }
 
+template < class Container>
+	static void	bench_value_erase(Container& con)
+{
+	for (size_t i = con.size(); i > 0; i--)
+		con.erase(i);
+}
+
+template < class Container>
+	static void	bench_range_erase(Container& con)
+{
+	con.erase(con.begin(), --con.end());
+}
+
 template < class Container >
 	static void	bench_elem_access(Container& con)
 {
@@ -72,6 +85,22 @@ template < class Container >
 	con_tba = con;
 }
 
+template < class Container, class p>
+	static void	bench_hint_insert(Container& con, p(*mp)(size_t, test))
+{
+	con.insert(mp(0, test(1, "first")));
+	for (size_t i = 1; i < 500000; i++)
+		con.insert(--con.end(), mp(i, test(69, "hint")));
+}
+
+template < class Container, class p>
+	static void	bench_wrong_hint_insert(Container& con, p(*mp)(size_t, test))
+{
+	con.insert(mp(0, test(1, "first")));
+	for (size_t i = 1; i < 500000; i++)
+		con.insert(con.begin(), mp(i, test(69, "hint")));
+}
+
 template < class Bench, class p>
 	static void bench_tests(Bench& bench, p(*mp)(size_t, test))
 {
@@ -91,6 +120,10 @@ template < class Bench, class p>
 		bench.run_test(bench_clear, "clear");
 	}
 
+	bench.run_test(bench_hint_insert, mp, "hint insert");
+	bench.run_test(bench_value_erase, "value erase");
+	bench.run_test(bench_wrong_hint_insert, mp, "insert wrong hint");
+	bench.run_test(bench_range_erase, "range erase");
 }
 
 void map_benchmark()
