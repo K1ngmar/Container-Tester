@@ -152,6 +152,49 @@ static void iterator_test()
 	/* do some reverse const iterator test you imbecile */
 }
 
+///////////////
+// Observers //
+///////////////
+static void observer_test()
+{
+	ft::map<size_t, int>							ft_map;
+	std::map<size_t, int>							std_map;
+	ft::map<size_t, int>::iterator					ft_itr;
+	std::map<size_t, int>::iterator					std_itr;
+	ft::map<size_t, int>::const_iterator			ft_citr;
+	std::map<size_t, int>::const_iterator			std_citr;
+
+	for (size_t i = 0; i < 15; i++) {
+		ft_map.insert(ft::make_pair(i, (int)i));
+		std_map.insert(std::make_pair(i, (int)i));
+	}
+
+/* testing value compare second argument is bigger */
+	ft_itr = ft_map.begin();
+	std_itr = std_map.begin();
+	bool ft_res = ft_map.value_comp()(*ft_itr, *(++ft_itr));
+	bool std_res = std_map.value_comp()(*std_itr, *(++std_itr));
+	compare(ft_res, std_res, compare_these_values_yo, "value_compare arg1 < arg2");
+
+/* testing value compare first arguement is bigger */
+	ft_res = ft_map.value_comp()(*(++ft_itr), *ft_itr);
+	std_res = std_map.value_comp()(*(++std_itr), *std_itr);
+	compare(ft_res, std_res, compare_these_values_yo, "value_comparea arg1 > arg2");
+
+
+/* testing key compare second argument is bigger */
+	ft_res = ft_map.key_comp()((*ft_itr).first, (*(++ft_itr)).first);
+	std_res = std_map.key_comp()((*std_itr).first, (*(++std_itr)).first);
+	compare(ft_res, std_res, compare_these_values_yo, "key_compare arg1 < arg2");
+
+/* testing key compare first arguement is bigger */
+	ft_res = ft_map.key_comp()((*(++ft_itr)).first, (*ft_itr).first);
+	std_res = std_map.key_comp()((*(++std_itr)).first, (*std_itr).first);
+	compare(ft_res, std_res, compare_these_values_yo, "value_compare arg1 > arg2");
+
+
+}
+
 ////////////////////
 // ELEMENT ACCESS //
 ////////////////////
@@ -208,11 +251,26 @@ static void modifier_test()
 /* insert */
 	for (size_t i = 0; i < 5000; i++) {
 		ft_map.insert(ft::make_pair(i, std::string("yos")));
-		ft_map.insert(ft::make_pair(i, std::string("yos")));
-		std_map.insert(std::make_pair(i, std::string("yos")));
 		std_map.insert(std::make_pair(i, std::string("yos")));
 	}
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "insert");
+
+/* return value key doesnt exist */
+	bool ft_res = ft_map.insert(ft::make_pair(42069, std::string("new"))).second;
+	bool std_res = std_map.insert(std::make_pair(42069, std::string("new"))).second;
+	compare(ft_res, std_res, compare_these_values_yo, "return value new key");
+
+/* return value key exists */
+	ft_res = ft_map.insert(ft::make_pair(420, std::string("exists"))).second;
+	std_res = std_map.insert(std::make_pair(420, std::string("exists"))).second;
+	compare(ft_res, std_res, compare_these_values_yo, "return value existing key");
+
+/* insert */
+	for (size_t i = 0; i < 5000; i++) {
+		ft_map.insert(ft::make_pair(i, std::string("exists")));
+		std_map.insert(std::make_pair(i, std::string("exists")));
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "insert existing key");
 
 /* erase */
 	while (ft_map.size() > 1337) {
@@ -221,10 +279,29 @@ static void modifier_test()
 	}
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "erase");
 
+/* hint insert */
+	for (size_t i = 0; i < 5000; i++) {
+		ft_map.insert(--ft_map.end(), ft::make_pair(i, std::string("exists")));
+		std_map.insert(--std_map.end(), std::make_pair(i, std::string("exists")));
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "hint insert");
+
+/* erase value */
+	for (size_t i = ft_map.size(); i > 1337; i--) {
+		ft_map.erase(i);
+		std_map.erase(i);
+	}
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "value erase");
+
 /* clear */
 	ft_map.clear();
 	std_map.clear();
 	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "clear");
+
+/* clear */
+	ft_map.clear();
+	std_map.clear();
+	compare(ft_map, ft_map.begin(), std_map, std_map.begin(), compare_these_maps_yo, "clear on empty erase");
 }
 
 static void operations_test()
@@ -371,4 +448,5 @@ void	map_unit()
 	start_test("element access", element_access_test); 
 	start_test("modifiers", modifier_test);
 	start_test("operations", operations_test);
+	start_test("observers", observer_test);
 }
