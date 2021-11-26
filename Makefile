@@ -37,21 +37,27 @@ SRC			=	main.cpp \
 				map_tests/map_unit.cpp \
 				map_tests/map_benchmark.cpp
 
-HEADER_LOC	=	-I ./Fadey/includes/				\
-				-I ../Containers/deque/				\
-				-I ../Containers/utility/			\
-				-I ../Containers/iterator/			\
-				-I ../Containers/list/				\
-				-I ../Containers/map/				\
-				-I ../Containers/pair/				\
-				-I ../Containers/multimap/			\
-				-I ../Containers/priority_queue/	\
-				-I ../Containers/queue/				\
-				-I ../Containers/set/				\
-				-I ../Containers/sfinae/			\
-				-I ../Containers/stack/				\
-				-I ../Containers/unordered_map/		\
-				-I ../Containers/vector/
+ifndef CONTAINERS_LOC
+CONTAINERS_LOC = ../containers
+endif
+
+HEADER_LOC	=	-I ./Fadey/includes/					\
+				-I $(CONTAINERS_LOC)/deque/				\
+				-I $(CONTAINERS_LOC)/utility/			\
+				-I $(CONTAINERS_LOC)/iterator/			\
+				-I $(CONTAINERS_LOC)/list/				\
+				-I $(CONTAINERS_LOC)/map/				\
+				-I $(CONTAINERS_LOC)/pair/				\
+				-I $(CONTAINERS_LOC)/multimap/			\
+				-I $(CONTAINERS_LOC)/priority_queue/	\
+				-I $(CONTAINERS_LOC)/queue/				\
+				-I $(CONTAINERS_LOC)/set/				\
+				-I $(CONTAINERS_LOC)/sfinae/			\
+				-I $(CONTAINERS_LOC)/stack/				\
+				-I $(CONTAINERS_LOC)/unordered_map/		\
+				-I $(CONTAINERS_LOC)/vector/			\
+				-I $(CONTAINERS_LOC)/srcs				\
+				-I $(CONTAINERS_LOC)/src
 
 TEST_HEADER =	-I includes/
 
