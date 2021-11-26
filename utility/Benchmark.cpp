@@ -82,25 +82,25 @@ void	format_benchmark_result(std::map< std::string, size_t >	& ft_rs,
 
 void	print_benchmark_result(double ft_dur, double std_dur, const char* type)
 {
-	double result = (std_dur / ft_dur) * 100;
+	double result = (ft_dur - std_dur) / ft_dur * 100;
 
 	std::cout << COLOR_GREEN << "\nft" << COLOR_RESET;
 	std::cout << "::" << COLOR_ORANGE << type << COLOR_RESET;
 	std::cout << std::fixed << std::setprecision(2);
 	std::cout << " was ";
-	if (result >= (float)95 && result <= (float)105) {
-		if  (result <= (float)100)
-			std::cout << COLOR_ORANGE << (float)100 - result << COLOR_RESET << "% slower";
+	if (result >= (double)-5 && result <= (double)5) {
+		if  (result >= (double)0)
+			std::cout << COLOR_ORANGE << result << COLOR_RESET << "% slower";
 		else 
-			std::cout << COLOR_ORANGE << result - (float)100 << COLOR_RESET << "% faster";
+			std::cout << COLOR_ORANGE << -result << COLOR_RESET << "% faster";
 		std::cout << COLOR_LBLUE << " (￢_￢;)\n";
 	}
-	else if (result >= (float)100) {
-		std::cout << COLOR_GREEN << result - (float)100 << COLOR_RESET << "% ";
+	else if (result < (double)-5) {
+		std::cout << COLOR_GREEN << -result << COLOR_RESET << "% ";
 		std::cout << "faster " << COLOR_YELLOW << "ヽ(o＾▽＾o)ノ\n";
 	}
 	else {
-		std::cout << COLOR_RED << (float)100 - result << COLOR_RESET << "% ";
+		std::cout << COLOR_RED << result << COLOR_RESET << "% ";
 		std::cout << "slower " << COLOR_BLU << "(っ˘̩╭╮˘̩)っ\n";
 	}
 	std::cout << COLOR_RESET;
