@@ -29,26 +29,9 @@ int main()
 {
 	srand(69);
 
-	std::ifstream file("BANNER");
+	std::ifstream file("banner/BANNER");
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	km::fadey << buffer.str() << std::endl;
-
-	vector_unit();
-	vector_benchmark();
-
-	deqtor_unit();
-	deqtor_benchmark();
-
-	map_unit();
-	map_benchmark();
-
-	set_unit();
-	set_benchmark();
-
-	#ifndef DEBUG
-		std::cout << std::endl;
-		system("leaks container_test | grep 'leaks for'");
-	#endif
 	return(0);
 }
