@@ -29,6 +29,7 @@
 # include <stdlib.h>
 # include <vector>
 # include <utility>
+# include <stdlib.h>
 
 ///////////////////
 // COLOR DEFINES //
@@ -203,6 +204,22 @@
 
 
 	bool		compare_exceptions(std::string& ft_exc, std::string& std_exc);
+
+////////////////////////
+// Leaky bois utility //
+////////////////////////
+template < class T >
+	void run_leaks(T argc, char** argv)
+{
+	(void)argc;
+	#ifndef DEBUG
+		std::cout << std::endl;
+		std::string name(argv[0]);
+		name.erase(0, name.rfind("/") + 1);
+		std::string leaks(std::string("leaks ") + name + " | grep 'leaks for'");
+		system(leaks.c_str());
+	#endif
+}
 
 ///////////////////
 // Class utility //

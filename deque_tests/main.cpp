@@ -19,26 +19,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <test_utility.hpp>
-#include <fadey.hpp>
-#include <iostream>
-#include <string>
 
 int main(int argc, char** argv)
 {
-	(void)argc;
 	srand(69);
 
 	deqtor_unit();
 	deqtor_benchmark();
 
-	#ifndef DEBUG
-		std::cout << std::endl;
-		std::string name(argv[0]);
-		name.erase(0, name.rfind("/") + 1);
-		std::string leaks(std::string("leaks ") + name + " | grep 'leaks for'");
-		system(leaks.c_str());
-	#endif
+	run_leaks(argc, argv);
 	return(0);
 }
