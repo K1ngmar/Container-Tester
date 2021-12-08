@@ -43,6 +43,9 @@ int main()
 	map_unit();
 	map_benchmark();
 
+	set_unit();
+	set_benchmark();
+
 	#ifndef DEBUG
 		std::cout << std::endl;
 		system("leaks container_test | grep 'leaks for'");

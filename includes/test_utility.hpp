@@ -186,6 +186,22 @@
 		return (true);
 	}
 
+
+	template < class ft_pair, class std_pair >
+		bool	compare_these_iterator_pairs_yo(ft_pair& ft_pr, std_pair& std_pr)
+	{
+		if (compare_these_values_yo(*(ft_pr.first), *(std_pr.first)) == false) {
+			std::cout << "Difference in key\n";
+			return (false);
+		}
+		if (compare_these_values_yo(*(ft_pr.second), *(std_pr.second)) == false) {
+			std::cout << "Difference in mapped type\n";
+			return false;
+		}
+		return (true);
+	}
+
+
 	bool		compare_exceptions(std::string& ft_exc, std::string& std_exc);
 
 ///////////////////
@@ -250,5 +266,7 @@ void	format_benchmark_result(std::vector< std::pair< std::string, size_t> >& ft_
 	void	deqtor_benchmark();
 	void	map_unit();
 	void	map_benchmark();
+	void	set_unit();
+	void	set_benchmark();
 
 #endif
