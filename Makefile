@@ -26,6 +26,7 @@ MAP_NAME	=	map_tester
 SET_NAME	=	set_tester
 STACK_NAME	=	stack_tester
 VECTOR_NAME	=	vector_tester
+BANNER_NAME	=	print_banner
 
 CC			=	clang++
 
@@ -33,7 +34,7 @@ FLAGS		=	-std=c++98 -pedantic -Wall -Werror -Wextra
 
 DEBUG_FLAGS	=	-g -fsanitize=address
 
-SRC			=	main.cpp
+BANNER_SRC	=	banner/main.cpp
 
 UTILITY		=	utility/test_utility.cpp			\
 				utility/benchmark.cpp
@@ -56,7 +57,7 @@ VECTOR_SRC	=	vector_tests/vector_unit.cpp		\
 				
 TEST_HEADER =	-I includes/
 
-LIBRARIES	=	Fadey/libfadey.a
+LIBFADEY	=	Fadey/libfadey.a
 
 FADEY		=	./Fadey
 
@@ -64,45 +65,66 @@ FADEY_LOC	=	-I $(FADEY)/includes/
 
 RM 			=	rm -f
 
-COMMON_LOC	=  $(LIBRARIES) $(UTILITY) $(FADEY_LOC) $(OTHER_LOC) $(UTILITY_LOC) $(PAIR_LOC) $(ITERATOR_LOC) $(TEST_HEADER)
+COMMON_LOC	=  $(LIBFADEY) $(UTILITY) $(FADEY_LOC) $(OTHER_LOC) $(UTILITY_LOC) $(PAIR_LOC) $(ITERATOR_LOC) $(TEST_HEADER)
 
-all: $(NAME) deque map set vector
+all: $(BANNER_NAME)
+	@ ./$(BANNER_NAME)
+	@ $(MAKE) deque
+	@ $(MAKE) map
+	@ $(MAKE) set
+	@ $(MAKE) deque
 
-$(NAME):
+$(BANNER_NAME):
+	@ $(CC) $(FLAGS) $(BANNER_SRC) $(COMMON_LOC) -o $(BANNER_NAME)
 
-deque: make_fadey
-	@ $(CC) $(FLAGS) $(DEQUE_SRC) $(DEQUE_LOC) $(COMMON_LOC) -o $(DEQUE_NAME)
+deque: make_fadey $(DEQUE_NAME)
 	@ ./$(DEQUE_NAME)
 
-map: make_fadey 
-	@ $(CC) $(FLAGS) $(MAP_SRC) $(MAP_LOC) $(COMMON_LOC) -o $(MAP_NAME)
+$(DEQUE_NAME):
+	@ $(CC) $(FLAGS) $(DEQUE_SRC) $(DEQUE_LOC) $(COMMON_LOC) -o $(DEQUE_NAME)
+
+map: make_fadey $(MAP_NAME)
 	@ ./$(MAP_NAME)
+
+$(MAP_NAME):
+	@ $(CC) $(FLAGS) $(MAP_SRC) $(MAP_LOC) $(COMMON_LOC) -o $(MAP_NAME)
 	
-set: make_fadey 
-	@ $(CC) $(FLAGS) $(SET_SRC) $(SET_LOC) $(COMMON_LOC) -o $(SET_NAME)
+set: make_fadey $(SET_NAME)
 	@ ./$(SET_NAME)
 
-stack: make_fadey 
-	@ $(CC) $(FLAGS) $(STACK_SRC) $(STACK_LOC) $(COMMON_LOC) -o $(STACK_NAME)
+$(SET_NAME):
+	@ $(CC) $(FLAGS) $(SET_SRC) $(SET_LOC) $(COMMON_LOC) -o $(SET_NAME)
+
+stack: make_fadey $(STACK_NAME)
 	@ ./$(STACK_NAME)
 
-vector: make_fadey
-	@ $(CC) $(FLAGS) $(VECTOR_SRC) $(VECTOR_LOC) $(COMMON_LOC) -o $(VECTOR_NAME)
+$(STACK_NAME):
+	@ $(CC) $(FLAGS) $(STACK_SRC) $(STACK_LOC) $(COMMON_LOC) -o $(STACK_NAME)
+
+vector: make_fadey $(VECTOR_NAME)
 	@ ./$(VECTOR_NAME)
 
-make_fadey:
-	make -C Fadey/
+$(VECTOR_NAME):
+	@ $(CC) $(FLAGS) $(VECTOR_SRC) $(VECTOR_LOC) $(COMMON_LOC) -o $(VECTOR_NAME)
+
+make_fadey: $(LIBFADEY)
+
+$(LIBFADEY):	
+	@ $(MAKE) -C Fadey/
 
 clean:
-	$(RM) $(OBJ)
-	make clean -C Fadey/ 
+	@ $(RM) $(OBJ)
+	@ $(MAKE) clean -C Fadey/ 
 
 fclean: clean
-	make fclean -C Fadey/
+	$(MAKE) fclean -C Fadey/
 	$(RM) $(DEQUE_NAME)
 	$(RM) $(MAP_NAME)
 	$(RM) $(SET_NAME)
 	$(RM) $(STACK_NAME)
 	$(RM) $(VECTOR_NAME)
+	$(RM) $(BANNER_NAME)
 
 re: fclean all
+
+.PHONY: $(BANNER_NAME)
