@@ -67,12 +67,15 @@ RM 			=	rm -f
 
 COMMON_LOC	=  $(LIBFADEY) $(UTILITY) $(FADEY_LOC) $(OTHER_LOC) $(UTILITY_LOC) $(PAIR_LOC) $(ITERATOR_LOC) $(TEST_HEADER)
 
-all: $(BANNER_NAME)
-	@ ./$(BANNER_NAME)
+all:
+	@ $(MAKE) banner
 	@ $(MAKE) deque
 	@ $(MAKE) map
 	@ $(MAKE) set
-	@ $(MAKE) deque
+	@ $(MAKE) vector
+
+banner: make_fadey $(BANNER_NAME)
+	@ ./$(BANNER_NAME)
 
 $(BANNER_NAME):
 	@ $(CC) $(FLAGS) $(BANNER_SRC) $(COMMON_LOC) -o $(BANNER_NAME)
