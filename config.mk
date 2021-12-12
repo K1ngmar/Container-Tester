@@ -39,6 +39,7 @@ VECTOR_LOC		=	$(CONTAINERS_LOC)/vector/
 
 OTHER_LOC		=	$(CONTAINERS_LOC)/sfinae/					\
 					$(CONTAINERS_LOC)/unorederd_map/			\
-					$(CONTAINERS_LOC)/lexicographical_compare/
+					$(CONTAINERS_LOC)/lexicographical_compare/	\
+					$(CONTAINERS_LOC)/type_traits
 
 CONTAINERS_LOC	= $(addprefix -I, $(_CONTAINERS_LOC))
